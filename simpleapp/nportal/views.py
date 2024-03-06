@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
+#Импортируем модуль авторизации
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .forms import PostForm
 from .models import Post, count_posts
 from .filters import PostFilter
@@ -66,7 +67,9 @@ def create_post(request):
             return  HttpResponseRedirect('/news/')
     return render(request, 'post_edit.html', {'form':form})
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    # Добавляю проверку прав создание поста
+    permission_required = ('nportal.add_post',)
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
@@ -88,12 +91,14 @@ class PostCreate(CreateView):
 
 
 # Добавляем представление для изменения товара.
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    permission_required = ('nportal.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
-
+    login_url = 'post_list'
     def form_valid(self, form):
+        form.instance.author = self.request.user
         post = form.save(commit=False)
         if type == 'news':
             post.art_new = 'N'
