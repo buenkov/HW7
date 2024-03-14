@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Здравствуйте {{username}}, готова ваша рассылка за неделю, вы об этом знаете благодаря подписке на новости</h2>
+    <div>
+<h1>Все публикации за неделю</h1>
+{% if posts %}
+	{% for post in posts %}
+		<hr>
+		<h2>{{ post.title}}</h2>
+		Дата публикации: {{ post.create_date|date:'M d Y' }}
+		<br>
+		{{post.text|truncatewords:20}}
+        <br>
+        Ссылка: <a href="http://127.0.0.1:8000/portal/{{ post.id }}"> читать </a>
+        <br>
+        Автор : {{ post.author }}
+        <br>
+	{% endfor %}
+{% else %}
+<h2>Публикаций за неделю нет!</h2>
+{% endif %}
+</div>
+
+
+    <p> {{ post.text |truncatechars:50 }}</p>
+</body>
+</html>

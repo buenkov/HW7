@@ -1,0 +1,99 @@
+Добавьте пользователю возможность подписываться на рассылку новостей в какой-либо категории.
+ - готово реализовано отображение только новостей или только статей
+    \nportal\views.py
+    class ArticlesList(ListView)
+    class NewsList(ListView)
+
+    созданы 2 группы в админке джанго, где мы будем хранить тех кто подписался
+    sub_A
+    sub_N
+
+    в nportal\views.py
+    в class NewsList(ListView): добавлен контекст
+    def get_context_data(self, **kwargs):
+    context['is_not_subscriber'] = not self.request.user.groups.filter(name='sub_N').exists()
+    кнопку показываем тем, кто еще не подписан
+
+    news.html
+    добавлена кнопка подписаться
+    {% if is_not_subscriber %}
+    <button> <a href="subscribeN/"> Хочу Подписаться!</a> </button>
+    {% endif %}
+
+    в urls добавлен url
+    path('news/subscribeN/', subscribe_news, name='subscribe_news'),
+
+    и во view добавлена функция
+
+    @login_required
+    def subscribe_news(request):
+    user = request.user
+    subscribe_group = Group.objects.get(name='sub_N')
+    if not request.user.groups.filter(name='sub_N').exists():
+        subscribe_group.user_set.add(user)
+    return redirect('/')
+
+для статей реализовано аналогично
+
+во view
+class PostCreate
+в
+def form_valid
+добавлено условие
+
+        if post.art_new == 'N':
+
+            subscribe_group = Group.objects.get(name='sub_N')
+            users = subscribe_group.user_set.all()
+
+            for user in users:
+                email = tuple(user.email.split('  '))
+                username = user.username
+                msg = EmailMultiAlternatives(
+                        subject=f'Здравствуй, {username}, Создана новая новость с темой: {post.title}',
+                        body=f'Здравствуй, {username}, Новая статья в твоём любимом разделе!  {post.text}',  # это то же, что и message
+                        from_email='buenkov-ta@yandex.ru',
+                        to=email,  # это то же, что и recipients_list
+                    )
+
+                html_content = render_to_string(
+                    'post_created.html',
+                    {
+                        'username': username,
+                        'post': post,
+                    }
+                )
+                msg.attach_alternative(html_content, "text/html")  # добавляем html
+                msg.send()  # отсылаем
+
+перенес все в signals.py
+
+добавил ограничение менее 3-ех постов в день для пользователя:
+views
+class PostCreate
+def form_valid
+
+# Добавляем, проверку, того, что пользователь не создал более 3 постов за сегодня
+        today = timezone.now().date()
+        posts_count_today = Post.objects.filter(author=self.request.user, create_date__date=today).count()
+        if posts_count_today >= 3:
+            # Если у пользователя 3 поста или более возвращаем ошибку, прерываем выполнение
+            return render(self.request, 'post_edit.html',
+                          {'form': form, 'error_message': 'Вы уже создали 3 публикации за день.'})
+
+Один пользователь не может публиковать более трёх новостей в сутки.
+views
+class PostCreate
+def form_valid
+
+today = timezone.now().date()
+        author_instance = Author.objects.get(user=self.request.user)
+        posts_count_today = Post.objects.filter(author=author_instance, create_date__date=today).count()
+        if posts_count_today >= 3:
+            # Если у пользователя 3 поста или более возвращаем ошибку, прерываем выполнение
+            return render(self.request, 'post_edit.html',
+                          {'form': form, 'error_message': 'Вы уже создали 3 публикации за день.'})
+
+
+nportal\management\commands\runaps.py
+создано расписание и еженедельная отправка писем

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(null=True)
@@ -47,6 +48,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     def __str__(self):
         return self.name
+
 
 class Post(models.Model):
     article = 'A'
