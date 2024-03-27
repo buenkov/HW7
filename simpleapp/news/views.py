@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -8,6 +8,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .forms import ProductForm
 from .models import Product
 from .filters import ProductFilter
+from django.views import View
+from .tasks import hello, printer
 
 class ProductsList(ListView):
     # Указываем модель, объекты которой мы будем выводить
@@ -90,3 +92,9 @@ class ProductDelete(DeleteView):
     model = Product
     template_name = 'product_delete.html'
     success_url = reverse_lazy('product_list')
+
+class IndexView(View):
+    def get(self, request):
+        printer.delay(10)
+        hello.delay()
+        return HttpResponse('Hello!')

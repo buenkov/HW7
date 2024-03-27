@@ -169,7 +169,17 @@ APSCHEDULER_RUN_NOW_TIMEOUT = 25
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
 EMAIL_HOST_USER = 'buenkov-ta'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = '**************'  # пароль от почты
+EMAIL_HOST_PASSWORD = '*****'  # пароль от почты
 EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
 
 DEFAULT_FROM_EMAIL = 'buenkov-ta@yandex.ru'
+
+#далее блок для redis
+# redis://:пароль@endpoint:port
+
+CELERY_BROKER_URL = 'redis://:mS8Pfiy9qBCBa8AkBNw2tf4FlxlT4S7Y@redis-10133.c259.us-central1-2.gce.cloud.redislabs.com:10133'
+CELERY_RESULT_BACKEND = 'redis://:mS8Pfiy9qBCBa8AkBNw2tf4FlxlT4S7Y@redis-10133.c259.us-central1-2.gce.cloud.redislabs.com:10133'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
