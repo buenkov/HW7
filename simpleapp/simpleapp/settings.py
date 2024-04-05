@@ -177,8 +177,8 @@ DEFAULT_FROM_EMAIL = 'buenkov-ta@yandex.ru'
 #далее блок для redis
 # redis://:пароль@endpoint:port
 
-CELERY_BROKER_URL = 'redis://:20fqzN**********2a39mxsDl777@redis-12067.**********ud.redislabs.com:12067'
-CELERY_RESULT_BACKEND = 'redis://:20fq********ODb2a39mxsDl777@redis-12067.c326********ec2.cloud.redislabs.com:12067'
+CELERY_BROKER_URL = 'redis://:20fqzN*****************2a39mxsDl777@redis-12067.**********ud.redislabs.com:12067'
+CELERY_RESULT_BACKEND = 'redis://:20fq**************ODb2a39mxsDl777@redis-12067.c326********ec2.cloud.redislabs.com:12067'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
