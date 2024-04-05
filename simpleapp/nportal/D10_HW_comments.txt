@@ -1,0 +1,36 @@
+1.) Установить Redis.
+requerements.txt
+готово redis==5.0.3
+settings.py
+CELERY_BROKER_URL
+2.) Установить Celery.
+requerements.txt
+celery==5.3.6
+3.) Произвести необходимые конфигурации Django для соединения всех компонентов системы.
+готово
+4.) Реализовать рассылку уведомлений подписчикам после создания новости.
+готово
+nportal/tasks
+def sender_subsribers
+вызов функции
+nportal/signals
+@receiver(post_save, sender=Post)
+def notify_subscribers(sender, instance, created, **kwargs):
+    sender_subsribers.apply_async([instance.pk], countdown = 5)
+
+запуск
+celery -A simpleapp worker --pool=solo  --loglevel=DEBUG
+
+5.) Реализовать еженедельную рассылку с последними новостями (каждый понедельник в 8:00 утра).
+готово
+nportal/tasks
+def weakly_report
+вызов
+simpleapp/celery
+app.conf.beat_schedule = {
+    'clear_board_every_minute'
+
+ запуск
+ celery -A simpleapp beat -l debug
+и затем
+celery -A simpleapp worker --pool=solo  --loglevel=DEBUG
