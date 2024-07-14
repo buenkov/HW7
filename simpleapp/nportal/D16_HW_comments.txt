@@ -1,18 +1,38 @@
-1.) В консоль должны выводиться все сообщения уровня DEBUG и выше, включающие время, уровень сообщения, сообщения. Для сообщений WARNING и выше дополнительно должен выводиться путь к источнику события (используется аргумент pathname в форматировании). А для сообщений ERROR и CRITICAL еще должен выводить стэк ошибки (аргумент exc_info). Сюда должны попадать все сообщения с основного логгера django.
+В консоль должны выводиться все сообщения уровня DEBUG и выше, включающие время, уровень сообщения, сообщения. Для сообщений WARNING и выше дополнительно должен выводиться путь к источнику события (используется аргумент pathname в форматировании). А для сообщений ERROR и CRITICAL еще должен выводить стэк ошибки (аргумент exc_info). Сюда должны попадать все сообщения с основного логгера django.
 в файле settings.py
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    #при помощи фильтров нужно указать, что в консоль сообщения отправляются только при DEBUG = True, а на почту и в файл general.log — только при DEBUG = False.
+    'filters': {
+        'require_debug_true': {
+            '()': RequireDebugTrue,
+        },
+        'require_debug_false': {
+            '()': RequireDebugFalse,
+        },
+    },
     'formatters': {
         'default': {
-            'format': '%(asctime)s %(levelname)s %(message)s',
+            'format': '%(asctime)s %(levelname)s %(message)s', # включающие время, уровень сообщения, сообщения
         },
         'detailed': {
-            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s',
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s', # дополнительно должен выводиться путь к источнику события (используется аргумент pathname в форматировании)
         },
         'error': {
-            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s\n%(exc_info)s',
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s\n%(exc_info)s', #должен выводить стэк ошибки (аргумент exc_info)
+        },
+        'file': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',#должен выводить в файл  указанием времени, уровня логирования, модуля, в котором возникло сообщение
+        },
+        # Добавляем формат безопасности Формат вывода предполагает время, уровень логирования, модуль и сообщение.
+        'security': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+        },
+        #На почту должны отправляться сообщения уровней ERROR и выше из django.request и django.server по формату, как в errors.log, но без стэка ошибок.
+        'email': {
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s',
         },
     },
     'handlers': {
@@ -20,23 +40,83 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'default',
+            'filters': ['require_debug_true'],
         },
         'console_warning': {
             'level': 'WARNING',
             'class': 'logging.StreamHandler',
             'formatter': 'detailed',
+            'filters': ['require_debug_true'],
         },
         'console_error': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
             'formatter': 'error',
+            'filters': ['require_debug_true'],
+        },
+        #Добавляем логироввание в дженерал лог
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'general.log'),
+            'formatter': 'file',
+            'filters': ['require_debug_false'],
+        },
+        #Добавляем логироввание в еррор лог
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'errors.log'),
+            'formatter': 'error',
+        },
+        #Добавляем логироввание в секьюрити лог
+        'security_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'security.log'),
+            'formatter': 'security',
+        },
+        #добавляем отправку сообщений админам
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'email',
+            'filters': ['require_debug_false'],
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'console_warning', 'console_error'],
+            'handlers': ['console', 'console_warning', 'console_error', 'file'],
             'level': 'DEBUG',
             'propagate': True,
         },
+        # В файл еррор лог должны попадать сообщения только из логгеров django.request, django.server, django.template, django.db.backends
+        # На почту должны отправляться сообщения уровней ERROR и выше из django.request и django.server
+        'django.request': {
+            'handlers': ['error_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['error_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.template': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        #Включаем само секьюрити логирование
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        }
     },
 }
