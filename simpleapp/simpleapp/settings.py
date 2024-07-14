@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+#Импорт, чтобы фильтры в логировании заработали
+from django.utils.log import RequireDebugTrue, RequireDebugFalse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DJANGO_SETTINGS_MODULE = 'simpleapp.settings'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -63,6 +67,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    #Если вдргу хотим закешить весь сайт_____
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    #эти строки для кэширования_____
 ]
 
 ROOT_URLCONF = 'simpleapp.urls'
@@ -166,6 +175,7 @@ ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
 EMAIL_HOST_USER = 'buenkov-ta'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
@@ -173,6 +183,12 @@ EMAIL_HOST_PASSWORD = '*****'  # пароль от почты
 EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
 
 DEFAULT_FROM_EMAIL = 'buenkov-ta@yandex.ru'
+
+#Добавляем админов в получатели
+ADMINS = [
+    ('Тимофей Буенков', 'buenkov-ta@yandex.ru'),
+]
+
 
 #далее блок для redis
 # redis://:пароль@endpoint:port
@@ -183,3 +199,134 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+
+CACHES = {
+    'default': {
+        'TIMEOUT': 60, # добавляем стандартное время ожидания в минуту (по умолчанию это 5 минут — 300 секунд)
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
+
+#Включаем логирование
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    #при помощи фильтров нужно указать, что в консоль сообщения отправляются только при DEBUG = True, а на почту и в файл general.log — только при DEBUG = False.
+    'filters': {
+        'require_debug_true': {
+            '()': RequireDebugTrue,
+        },
+        'require_debug_false': {
+            '()': RequireDebugFalse,
+        },
+    },
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s %(levelname)s %(message)s', # включающие время, уровень сообщения, сообщения
+        },
+        'detailed': {
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s', # дополнительно должен выводиться путь к источнику события (используется аргумент pathname в форматировании)
+        },
+        'error': {
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s\n%(exc_info)s', #должен выводить стэк ошибки (аргумент exc_info)
+        },
+        'file': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',#должен выводить в файл  указанием времени, уровня логирования, модуля, в котором возникло сообщение
+        },
+        # Добавляем формат безопасности Формат вывода предполагает время, уровень логирования, модуль и сообщение.
+        'security': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+        },
+        #На почту должны отправляться сообщения уровней ERROR и выше из django.request и django.server по формату, как в errors.log, но без стэка ошибок.
+        'email': {
+            'format': '%(asctime)s %(levelname)s [%(pathname)s:%(lineno)d] %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'filters': ['require_debug_true'],
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'detailed',
+            'filters': ['require_debug_true'],
+        },
+        'console_error': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'error',
+            'filters': ['require_debug_true'],
+        },
+        #Добавляем логироввание в дженерал лог
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'general.log'),
+            'formatter': 'file',
+            'filters': ['require_debug_false'],
+        },
+        #Добавляем логироввание в еррор лог
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'errors.log'),
+            'formatter': 'error',
+        },
+        #Добавляем логироввание в секьюрити лог
+        'security_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'security.log'),
+            'formatter': 'security',
+        },
+        #добавляем отправку сообщений админам
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'email',
+            'filters': ['require_debug_false'],
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'console_warning', 'console_error', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        # В файл еррор лог должны попадать сообщения только из логгеров django.request, django.server, django.template, django.db.backends
+        # На почту должны отправляться сообщения уровней ERROR и выше из django.request и django.server
+        'django.request': {
+            'handlers': ['error_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['error_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.template': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['error_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        #Включаем само секьюрити логирование
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        }
+    },
+}

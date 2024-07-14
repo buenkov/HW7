@@ -20,11 +20,15 @@ def censor(value):
       if word.lower() in titles:
          # берем первую букву
          _word = word[0]
+         _lword = word[-1]
          # далее столько звездочек, сколько букв
-         word = _word + ("*" *len(word))
+         word = _word + ("*" *(len(word)-2)) + _lword
       S += word + " "
    # Убираем лищний пробел
    return S[:-1]
 
+@register.filter
+def pow(value, exponent):
+    return value ** exponent
 
 

@@ -6,4 +6,5 @@ class NportalConfig(AppConfig):
     name = 'nportal'
 
     def ready(self):
+        import nportal.filters
         import nportal.signals
