@@ -1,6 +1,12 @@
+"""
+This module defines URL patterns for your Django application.
+"""
+
 from django.urls import path
-from .views import PostsList, PostDetail, create_post, PostCreate, PostUpdate, PostDelete, NewsList, ArticlesList, \
-   subscribe_news, subscribe_arts
+from .views import PostsList, PostDetail, PostCreate
+from .views import PostUpdate, PostDelete, NewsList, ArticlesList
+from .views import subscribe_news, subscribe_arts
+#from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     # path — означает путь.
@@ -8,11 +14,15 @@ urlpatterns = [
    # Т.к. наше объявленное представление является классом,
    # а Django ожидает функцию, нам надо представить этот класс в виде view.
    # Для этого вызываем метод as_view.
+   # Кэшируем страницу с новостями на 1 минуту.
+   #path('', cache_page(60*10)(PostsList.as_view()), name='post_list'),
    path('', PostsList.as_view(), name='post_list'),
    # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
    # int — указывает на то, что принимаются только целочисленные значения
    path('news/', NewsList.as_view(), name='news_list'),
    path('articles/', ArticlesList.as_view(), name='articles_list'),
+   # Кэшируем детальную страницу поста на 5 минут.
+   #path('<int:pk>', cache_page(60*5)(PostDetail.as_view()), name='post_detail'),
    path('<int:pk>', PostDetail.as_view(), name='post_detail'),
    path('news/create/', PostCreate.as_view(), name='news_create'),
    path('articles/create/', PostCreate.as_view(), name='articles_create'),

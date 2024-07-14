@@ -10,6 +10,7 @@ Posts
 {% endblock title %}
  
 <!-- В контенте на странице мы выводим все товары -->
+
 {% block content %}
 
 {% if is_not_subscriber %}
@@ -27,6 +28,12 @@ Posts
    <hr>
 <div>
 <h1>Все публикации</h1>
+
+    {% load nportal_filters %}
+    {% load cache %}
+    {% cache 100 number %}
+        {{ 2|pow:10000 }}
+    {% endcache %}
     В повестке публикаций:
 {% if posts %}
 	{% for post in posts %}

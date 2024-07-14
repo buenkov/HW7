@@ -30,3 +30,4 @@ class PostFilter(FilterSet):
            # дата создания должна быть позже
            #'create_date': ['gte'],
        }
+

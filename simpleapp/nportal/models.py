@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -71,6 +72,10 @@ class Post(models.Model):
         self.rating -=1
         self.save()
 
+    # допишем свойство, которое будет отображать в админке новость ли это
+    def is_news(self):
+        return self.art_new == 'N'
+
     def preview(self):
         return self.text[:124] + "..."
     #10. Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
@@ -110,6 +115,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 class PostCategory(models.Model):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -1,0 +1,5 @@
+2024-07-14 20:14:03,775 INFO autoreload Watching for file changes with StatReloader
+2024-07-14 20:14:12,455 INFO basehttp "GET /portal/?page=7 HTTP/1.1" 200 9008
+2024-07-14 20:14:13,286 WARNING log Not Found: /portal/js/scripts.js
+2024-07-14 20:14:13,287 WARNING basehttp "GET /portal/js/scripts.js HTTP/1.1" 404 5129
+2024-07-14 20:25:20,478 INFO autoreload Watching for file changes with StatReloader
