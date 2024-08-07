@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
 from django.core.cache import cache
-
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy # импортируем «ленивый» геттекст с подсказкой
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -59,7 +60,7 @@ class Post(models.Model):
                                 choices=TYPE,
                                 default=article)
     create_date = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, help_text=_('Заголовок нашего поста'))# добавим переводящийся текст подсказку к полю)
     text = models.TextField()
     rating = models.IntegerField(default=0)
     categories = models.ManyToManyField(Category, through='PostCategory', null=True)

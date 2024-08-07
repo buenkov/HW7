@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMultiAlternatives
-from django.http import HttpResponseRedirect
+import pytz
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 #Импортируем модуль авторизации
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -15,8 +17,18 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from rest_framework import viewsets
+from .permissions import IsAuthenticatedOrReadOnly
+from .serializers import *
 
-
+class NewsViewset(viewsets.ModelViewSet):
+   queryset = Post.objects.filter(art_new ='N')
+   serializer_class = PostSerializer
+   permission_classes = [IsAuthenticatedOrReadOnly]
+class ArtViewset(viewsets.ModelViewSet):
+   queryset = Post.objects.filter(art_new ='A')
+   serializer_class = PostSerializer
+   permission_classes = [IsAuthenticatedOrReadOnly]
 class PostsList(ListView):
     # Указываем модель, объекты которой мы будем выводить
     model = Post
@@ -34,6 +46,8 @@ class PostsList(ListView):
     def get_queryset(self):
         # Получаем обычный запрос
         queryset = super().get_queryset()
+        queryset = queryset.select_related('author', 'author__user')
+        queryset = queryset.prefetch_related('categories')
         # Используем наш класс фильтрации.
         # self.request.GET содержит объект QueryDict, который мы рассматривали
         # в 7 юните ранее.
@@ -52,6 +66,8 @@ class PostsList(ListView):
         context = super().get_context_data(**kwargs)
         # Добавляем в контекст объект фильтрации.
         context['filterset'] = self.filterset
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
         return context
 
 # отдельное вью для новостей

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Confirm Registration</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Please enter the confirmation code sent to your email:</p>
+        <input type="text" name="code">
+        <button type="submit">Confirm</button>
+    </form>
+</body>
+</html>

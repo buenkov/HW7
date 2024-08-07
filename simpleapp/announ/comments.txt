@@ -1,0 +1,191 @@
+проект сосотит из 2-ух приложений sign, в котором осуществляется регистрация и идентификация пользователей и приложение announ, в котором реализована вся остальная бизнес-логика
+главаня страница приложения:
+http://127.0.0.1:8000/
+
+список объявлений http://127.0.0.1:8000/announts/
+создание объявления http://127.0.0.1:8000/announts/create/
+просмотреть отклики http://127.0.0.1:8000/announts/view_responses/
+отправить новостную рассылку http://127.0.0.1:8000/announts/create_news/
+
+
+
+1. Пользователи нашего ресурса должны иметь возможность зарегистрироваться в нём по e-mail, получив письмо с кодом подтверждения регистрации
+-создано приложение sign, в котором используются дженерики CreateView, BaseRegisterForm. для создания Player в приложении announ применяется simpleapp/sign/signals.py
+
+@receiver(post_save, sender=User)
+def create_player(sender, instance, created, **kwargs):
+    if created:
+        Player.objects.create(user=instance)
+
+
+2. После регистрации им становится доступно создание и редактирование объявлений
+
+в simpleapp/announ/views.py
+@login_required .....
+
+3.  Объявления состоят из заголовка и текста, внутри которого могут быть картинки, встроенные видео и другой контент.
+модели описаны в simpleapp/announ/models.py
+для поля, в котором могут быть картинки используется ckeditor
+
+4. Пользователи могут отправлять отклики на объявления других пользователей, состоящие из простого текста
+- реализовано в simpleapp/announ/views.py
+
+
+@login_required
+def add_response(request, announcement_id):
+    # Получаем объявление, если его нет - возвращаем 404
+    announcement = get_object_or_404(Announcement, id=announcement_id)
+
+    # Получаем игрока, если его нет - возвращаем 404
+    player, created = Player.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ResponseForm(request.POST)
+        if form.is_valid():
+            response = form.save(commit=False)
+            response.player_id = player
+            response.announcement_id = announcement
+            response.save()
+            return redirect('announcement_list')
+    else:
+        form = ResponseForm()
+
+    return render(request, 'add_response.html', {'form': form, 'announcement': announcement})
+
+- в шаблоне simpleapp/templates/announs.html реализована кнопка на отклик, которая скрывается если отклик уже был отправлен. при нажатии на кнопкку открывается шаблон
+simpleapp/templates/add_response.html, в котором пользователь вводит текст отклика
+
+5. При отправке отклика пользователь должен получить e-mail с оповещением о нём.
+- реализовано в simpleapp/announ/signals.py
+
+@receiver(post_save, sender=Response)
+def send_notification_to_author(sender, instance, created, **kwargs):
+    if created:
+        announcement = instance.announcement_id
+        author = announcement.author.user
+        send_mail(
+            subject=f'Новый отклик на ваше объявление "{announcement.title}"',
+            message=f'Пользователь {instance.player_id.user.username} откликнулся на ваше объявление "{announcement.title}".',
+            from_email='buenkov-ta@yandex.ru',
+            recipient_list=[author.email],
+            fail_silently=False,
+
+6. Также пользователю должна быть доступна приватная страница с откликами на его объявления, внутри которой он может фильтровать отклики по объявлениям, удалять их и принимать
+
+просмотреть отклики http://127.0.0.1:8000/announts/view_responses/
+
+реализовано в simpleapp/announ/views.py
+
+class ResponseFilterForm(forms.Form):
+    STATUS_CHOICES = [
+        ('all', 'Все'),
+        ('pending', 'Ожидает'),
+        ('accepted', 'Принято'),
+        ('rejected', 'Отклонено'),
+    ]
+    status = forms.ChoiceField(choices=STATUS_CHOICES, required=False, initial='all', label='Статус')
+    start_date = forms.DateField(required=False, widget=forms.TextInput(attrs={'type': 'date'}), label='Начальная дата')
+    end_date = forms.DateField(required=False, widget=forms.TextInput(attrs={'type': 'date'}), label='Конечная дата')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            announcements = Announcement.objects.filter(author__user=user)
+            ANNOUNCEMENT_CHOICES = [('all', 'Все')] + [(announcement.id, announcement.title) for announcement in
+                                                       announcements]
+            self.fields['announcement'] = forms.ChoiceField(choices=ANNOUNCEMENT_CHOICES, required=False, initial='all',
+                                                            label='Объявление')
+
+@login_required
+def view_responses(request):
+    player = get_object_or_404(Player, user=request.user)
+    announcements = Announcement.objects.filter(author=player)
+    responses = Response.objects.filter(announcement_id__in=announcements)
+
+    if request.method == 'POST':
+        if 'response_id' in request.POST and 'action' in request.POST:
+            response_id = request.POST.get('response_id')
+            action = request.POST.get('action')
+            response = get_object_or_404(Response, id=response_id)
+            if action == 'accept':
+                response.status = 'accepted'
+            elif action == 'reject':
+                response.status = 'rejected'
+            response.save()
+            return redirect('view_responses')
+        else:
+            filter_form = ResponseFilterForm(request.POST, user=request.user)
+            if filter_form.is_valid():
+                status = filter_form.cleaned_data.get('status')
+                start_date = filter_form.cleaned_data.get('start_date')
+                end_date = filter_form.cleaned_data.get('end_date')
+                announcement_id = filter_form.cleaned_data.get('announcement')
+
+                if status and status != 'all':
+                    responses = responses.filter(status=status)
+                if start_date:
+                    responses = responses.filter(create_date__gte=start_date)
+                if end_date:
+                    responses = responses.filter(create_date__lte=end_date)
+                if announcement_id and announcement_id != 'all':
+                    responses = responses.filter(announcement_id=announcement_id)
+    else:
+        filter_form = ResponseFilterForm(user=request.user)
+
+    return render(request, 'view_responses.html', {'responses': responses, 'filter_form': filter_form})
+
+7. (при принятии отклика пользователю, оставившему отклик, также должно прийти уведомление)
+
+- реализовано в simpleapp/announ/signals.py
+@receiver(pre_save, sender=Response)
+def notify_response_status_change(sender, instance, **kwargs):
+    if instance.pk:
+        previous_response = Response.objects.get(pk=instance.pk)
+        if previous_response.status != instance.status:
+            announcement = instance.announcement_id
+            player = instance.player_id.user
+            send_mail(
+                subject=f'Статус вашего отклика изменен на "{announcement.title}"',
+                message=f'Статус вашего отклика на объявление "{announcement.title}" изменен на "{instance.get_status_display()}".',
+                from_email='buenkov-ta@yandex.ru',  # замените на ваш email
+                recipient_list=[player.email],
+                fail_silently=False,
+            )
+
+
+8. Кроме того, пользователь обязательно должен определить объявление в одну из следующих категорий: Танки, Хилы, ДД, Торговцы, Гилдмастеры, Квестгиверы, Кузнецы, Кожевники, Зельевары, Мастера заклинаний.
+
+реализовано в моделях, контент заполнен в адмиинке джанго
+
+
+9. Также мы бы хотели иметь возможность отправлять пользователям новостные рассылки.
+
+реализовано на странице http://127.0.0.1:8000/announts/create_news/
+
+simpleapp/announ/views.py
+
+@login_required
+def create_news(request):
+    if request.method == 'POST':
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            news = form.save()
+            players = Player.objects.all()
+            recipient_list = [player.user.email for player in players if player.user.email]
+
+            # Используем render_to_string для создания HTML-сообщения
+            html_message = render_to_string('news_email.html', {'news': news})
+
+            send_mail(
+                subject=news.title,
+                message='',
+                from_email='buenkov-ta@yandex.ru',
+                recipient_list=recipient_list,
+                fail_silently=False,
+                html_message=html_message
+            )
+            return redirect('announcement_list')
+    else:
+        form = NewsForm()
+    return render(request, 'create_news.html', {'form': form})

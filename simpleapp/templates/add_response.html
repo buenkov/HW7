@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Добавить отклик
+{% endblock title %}
+
+{% block content %}
+<h1>Добавить отклик на "{{ announcement.title }}"</h1>
+
+<form method="post" action="{% url 'add_response' announcement.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Откликнуться</button>
+</form>
+{% endblock content %}

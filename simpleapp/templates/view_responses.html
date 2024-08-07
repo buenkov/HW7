@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Просмотр откликов
+{% endblock title %}
+
+{% block content %}
+<h1>Отклики на ваши объявления</h1>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ filter_form.as_p }}
+    <button type="submit">Фильтровать</button>
+</form>
+
+{% if responses %}
+    <ul>
+        {% for response in responses %}
+         <hr>
+            <li>
+                <p><strong>Объявление:</strong> {{ response.announcement_id }}</p>
+                <p><strong>Отклик от:</strong> {{ response.player_id  }}</p>
+                <p><strong>Текст отклика:</strong> {{ response.text }}</p>
+                <p><strong>Статус:</strong> {{ response.get_status_display }}</p>
+                <p><strong>Дата отклика:</strong> {{ response.create_date|date:'d M Y H:i' }}</p>
+
+                {% if response.status == 'pending' %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="response_id" value="{{ response.id }}">
+                        <button type="submit" name="action" value="accept">Принять</button>
+                        <button type="submit" name="action" value="reject">Отклонить</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Нет откликов на ваши объявления.</p>
+{% endif %}
+{% endblock content %}

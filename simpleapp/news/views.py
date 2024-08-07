@@ -1,15 +1,32 @@
 from datetime import datetime
 
+import pytz
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 from .forms import ProductForm
 from .models import Product
 from .filters import ProductFilter
 from django.views import View
 from .tasks import hello, printer
+from django.utils.translation import gettext
+from django.utils import timezone
+
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import *
+
+class ProductViewset(viewsets.ModelViewSet):
+   queryset = Product.objects.all()
+   serializer_class = ProductSerializer
+
+class CategorytViewset(viewsets.ModelViewSet):
+   queryset = Category.objects.all()
+   serializer_class = CategorySerializer
+
+
 
 class ProductsList(ListView):
     # Указываем модель, объекты которой мы будем выводить
@@ -57,7 +74,13 @@ class ProductsList(ListView):
         # чтобы на её примере рассмотреть работу ещё одного фильтра.
         context['next_sale'] = None
         context['filterset'] = self.filterset
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
         return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
 
 # Create your views here.
 class ProductDetail(DetailView):
@@ -98,3 +121,19 @@ class IndexView(View):
         printer.delay(10)
         hello.delay()
         return HttpResponse('Hello!')
+
+class Translate(View):
+    #template_name = 'translator.html'
+    def get(self, request):
+        curent_time = timezone.now()
+
+        string = gettext('Hello world')
+        context = {
+            'current_time': timezone.now(),
+            'timezones': pytz.common_timezones  # добавляем в контекст все доступные часовые
+        }
+        return HttpResponse(render(request, 'translator.html', context))
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')

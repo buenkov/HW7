@@ -2,12 +2,23 @@
 
 {% block content %}
 <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
-<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<div> Вам доступно: </div>
+<button> <a href="/announts/"> Список объявлений</a> </button>
+<button> <a href="announts/create/"> Подать объявление!</a> </button>
+<button> <a href="announts/view_responses/"> Просмотреть отклики на мои объявления</a> </button>
+<button> <a href="announts/create_news/"> Отправить новостную рассылку</a> </button>
 
+
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Выйти из системы</button>
+</form>
+<!--
 <button> <a href="sign/logout/">Выйти</a> </button>
-
+ -->
+<!--
 {% if is_not_premium %}
 <button> <a href="sign/upgrade/"> Хочу стать автором!</a> </button>
 {% endif %}
-
+ -->
 {% endblock %}

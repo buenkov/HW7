@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-urlpatterns = [
+from django.conf.urls.static import static
+from django.conf import settings
+
+urlpatterns = (
+        [
+    path('i18n/', include('django.conf.urls.i18n')), # подключаем встроенные эндопинты для работы с локализацией
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
     path('products/', include('news.urls')),
@@ -24,4 +29,10 @@ urlpatterns = [
     path('sign/', include('sign.urls')),
     path('user/', include('sign_user.urls')),
     path('accounts/', include('allauth.urls')),
+    path('announts/', include('announ.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
 ]
+        + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)

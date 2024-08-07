@@ -1,0 +1,468 @@
+2024-07-23 01:31:54,154 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/news/create/
+(<class 'nportal.models.Author.DoesNotExist'>, DoesNotExist('Author matching query does not exist.'), <traceback object at 0x00000252EEFEE8C0>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\contrib\auth\mixins.py", line 109, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\simpleapp\nportal\views.py", line 190, in form_valid
+    author_instance = Author.objects.get(user=self.request.user)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+nportal.models.Author.DoesNotExist: Author matching query does not exist.
+2024-07-23 01:31:54,155 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "POST /portal/news/create/ HTTP/1.1" 500 108409
+None
+2024-07-23 01:34:00,563 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/news/71/edit/
+(<class 'nportal.models.Author.DoesNotExist'>, DoesNotExist('Author matching query does not exist.'), <traceback object at 0x00000252EF991100>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 208, in post
+    return super().post(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\simpleapp\nportal\views.py", line 299, in form_valid
+    author_instance = Author.objects.get(user=self.request.user)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+nportal.models.Author.DoesNotExist: Author matching query does not exist.
+2024-07-23 01:34:00,564 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "POST /portal/news/71/edit/ HTTP/1.1" 500 108015
+None
+2024-07-23 01:34:15,130 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/news/71/edit/
+(<class 'nportal.models.Author.DoesNotExist'>, DoesNotExist('Author matching query does not exist.'), <traceback object at 0x00000252EF6FC740>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 208, in post
+    return super().post(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\simpleapp\nportal\views.py", line 299, in form_valid
+    author_instance = Author.objects.get(user=self.request.user)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+nportal.models.Author.DoesNotExist: Author matching query does not exist.
+2024-07-23 01:34:15,131 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "POST /portal/news/71/edit/ HTTP/1.1" 500 108015
+None
+2024-07-24 02:02:39,631 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("<ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template."), <traceback object at 0x00000212E627AB80>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 514, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 531, in extend_nodelist
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: <ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template.
+2024-07-24 02:02:39,635 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /portal/ HTTP/1.1" 500 150290
+None
+2024-07-24 02:03:43,475 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("<ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template."), <traceback object at 0x00000212E6355980>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 514, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 531, in extend_nodelist
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: <ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template.
+2024-07-24 02:03:43,476 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /portal/ HTTP/1.1" 500 150432
+None
+2024-07-24 02:03:45,149 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /portal/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("<ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template."), <traceback object at 0x00000212E62DA8C0>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 514, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 531, in extend_nodelist
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: <ExtendsNode: extends 'flatpages/default.html'> must be the first tag in the template.
+2024-07-24 02:03:45,150 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /portal/ HTTP/1.1" 500 150432
+None
+2024-07-24 02:32:45,405 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/translate/
+(<class 'django.urls.exceptions.NoReverseMatch'>, NoReverseMatch("Reverse for 'set_language' not found. 'set_language' is not a valid view function or pattern name."), <traceback object at 0x00000162AFEE1AC0>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'set_language' not found. 'set_language' is not a valid view function or pattern name.
+2024-07-24 02:32:45,407 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/translate/ HTTP/1.1" 500 125712
+None
+2024-07-24 20:07:07,537 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/translate/
+(<class 'NameError'>, NameError("name '_' is not defined"), <traceback object at 0x000001B64F188FC0>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\simpleapp\news\views.py", line 105, in get
+    string = _('Hello world')
+NameError: name '_' is not defined
+2024-07-24 20:07:07,538 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/translate/ HTTP/1.1" 500 84027
+None
+2024-07-24 20:07:30,314 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/translate/
+(<class 'NameError'>, NameError("name '_' is not defined"), <traceback object at 0x000001B64EC8E840>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\simpleapp\news\views.py", line 105, in get
+    string = 'Hello world'
+NameError: name '_' is not defined
+2024-07-24 20:07:30,315 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/translate/ HTTP/1.1" 500 84021
+None
+2024-07-24 23:00:45,076 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("Invalid block tag on line 50: 'get_available_languages'. Did you forget to register or load this tag?"), <traceback object at 0x0000025AF96B3B40>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'get_available_languages'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 50: 'get_available_languages'. Did you forget to register or load this tag?
+2024-07-24 23:00:45,077 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/ HTTP/1.1" 500 189863
+None
+2024-07-24 23:13:19,679 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?"), <traceback object at 0x000002314C17A780>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'trans'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?
+2024-07-24 23:13:19,681 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/ HTTP/1.1" 500 207656
+None
+2024-07-24 23:13:43,275 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?"), <traceback object at 0x000002314C132840>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'trans'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?
+2024-07-24 23:13:43,277 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/ HTTP/1.1" 500 207797
+None
+2024-07-24 23:13:45,497 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\utils\log.py:241] Internal Server Error: /products/
+(<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?"), <traceback object at 0x000002314C3BF280>)
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'trans'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 12: 'trans', expected 'endblock'. Did you forget to register or load this tag?
+2024-07-24 23:13:45,498 ERROR [C:\Users\t.buenkov\PycharmProjects\pythonProject5\eshop\lib\site-packages\django\core\servers\basehttp.py:212] "GET /products/ HTTP/1.1" 500 207797
+None
